@@ -7,7 +7,7 @@ Example usage:
     GET /api/health
 '''
 
-from app.controllers import HealthController
+from application.controllers import HealthController
 
 from flask import Blueprint, jsonify
 

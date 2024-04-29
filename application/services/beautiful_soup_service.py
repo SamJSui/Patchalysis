@@ -12,7 +12,7 @@ Contributors:
 '''
 
 # Internal imports
-from app.services.mongo_service import MongoService
+from application.services.mongo_service import MongoService
 
 # Standard library
 import logging
