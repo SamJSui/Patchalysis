@@ -8,6 +8,7 @@ Attributes:
 
 Contributors:
     Sam Sui
+    Jovi Yoshioka
 '''
 
 # Internal imports
@@ -15,6 +16,7 @@ from app.services.mongo_service import MongoService
 
 # Standard library
 import logging
+import re
 
 # Third-party libraries
 from bs4 import BeautifulSoup
@@ -37,7 +39,7 @@ class BeautifulSoupService:
         patches = history_soup.find_all('a', {'title': lambda title: all(char.isdigit() or char == '.' or char == 'V' for char in title) if title else False})
         
         all_patch_data = []
-        for patch in patches[:1]:  # Limited for demonstration
+        for patch in patches:
 
             patch_url = f'https://leagueoflegends.fandom.com{patch["href"]}'
             patch_page = requests.get(patch_url)
@@ -52,7 +54,6 @@ class BeautifulSoupService:
                 'champions': champions_data
             }
             all_patch_data.append(patch_data)
-            print(patch_data)
             logger.info(f'Patch {patch_version} data processed and stored.')
 
         return all_patch_data
@@ -77,11 +78,11 @@ class BeautifulSoupService:
 
         # For each season, scrape each patch version's stats.
         results = {}
-        for season_link in season_links:
+        for season_link in season_links[:1]:
             print('Scraping {}...'.format(season_link))  # Simply to track runtime progress.
 
             url = "https://gol.gg/champion" + season_link[1:]  # Note: removing '.' before the season link.
-            r = requests.post(url, headers={'User-Agent': 'Mozilla/5.0'})
+            r = requests.post(url, headers={ 'User-Agent': 'Mozilla/5.0' })
             soup = BeautifulSoup(r.text, "html.parser")
 
             # Get list of patch versions.
@@ -91,7 +92,7 @@ class BeautifulSoupService:
                 patch_versions.append(patch['value'])
 
             # Scrape data for each season and patch version.
-            for patch in patch_versions:
+            for patch in patch_versions[:1]:
                 print('     Scraping Patch {}...'.format(patch))  # Simply to track runtime progress.
 
                 post_data = {'patch': patch}
@@ -134,15 +135,15 @@ class BeautifulSoupService:
         print('Completed scraping stats...')
 
     def _parse_champion_data(self, soup):
-        """
-        Parses the champion updates from a BeautifulSoup object of a single patch page.
+        ''' Parses the champion updates from a BeautifulSoup object of a single patch page.
         
         Args:
             soup (BeautifulSoup): The BeautifulSoup object of the patch page.
             
         Returns:
             list: A list of dictionaries with champion names and their updates.
-        """
+        '''
+
         champions_section = soup.find('span', id='Champions').parent
         champion_names = champions_section.find_all_next('dl')
         champions_data = []
