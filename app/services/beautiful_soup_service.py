@@ -139,8 +139,8 @@ class BeautifulSoupService:
         f = open("stats.txt", "a")
         f.write(str(results))
         f.close()
-
         print('Completed scraping stats...')
+        return results
 
     def _parse_champion_data(self, soup):
         ''' Parses the champion updates from a BeautifulSoup object of a single patch page.
