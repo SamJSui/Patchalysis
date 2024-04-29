@@ -11,10 +11,10 @@ from application.controllers import HealthController
 
 from flask import Blueprint, jsonify
 
-health_blueprint = Blueprint('health', __name__, url_prefix='/api/health')
+health_blueprint = Blueprint('health', __name__, url_prefix='/api')
 health_controller = HealthController()
 
-@health_blueprint.route('', methods=['GET'])
+@health_blueprint.route('/healthcheck', methods=['GET'])
 def health_check():
     ''' Checks the health of the application.
 
