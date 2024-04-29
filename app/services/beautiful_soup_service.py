@@ -17,6 +17,7 @@ from app.services.mongo_service import MongoService
 # Standard library
 import logging
 import re
+import re
 
 # Third-party libraries
 from bs4 import BeautifulSoup
@@ -77,8 +78,8 @@ class BeautifulSoupService:
         season_links = season_links[:-1]
 
         # For each season, scrape each patch version's stats.
-        results = {}
-        for season_link in season_links[:1]:
+        results = []
+        for season_link in season_links:
             print('Scraping {}...'.format(season_link))  # Simply to track runtime progress.
 
             url = "https://gol.gg/champion" + season_link[1:]  # Note: removing '.' before the season link.
@@ -94,6 +95,8 @@ class BeautifulSoupService:
             # Scrape data for each season and patch version.
             for patch in patch_versions[:1]:
                 print('     Scraping Patch {}...'.format(patch))  # Simply to track runtime progress.
+
+                patch_data = {'_id': patch[:-1], }
 
                 post_data = {'patch': patch}
                 url = "https://gol.gg/champion" + season_link[1:]
@@ -130,7 +133,12 @@ class BeautifulSoupService:
                     if row_data != {}:
                         data.append(row_data)
 
-                results[patch[:-1]] = data
+                patch_data['champions'] = data
+                results.append(patch_data)
+
+        f = open("stats.txt", "a")
+        f.write(str(results))
+        f.close()
 
         print('Completed scraping stats...')
 
