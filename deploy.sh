@@ -24,4 +24,9 @@ sudo systemctl restart $SERVICE_NAME
 # Check the status of the application
 sudo systemctl status $SERVICE_NAME
 
+# Restart nginx
+sudo systemctl restart nginx
+sudo systemctl reload nginx
+sudo systemctl status nginx
+
 echo "Deployment script executed successfully."
