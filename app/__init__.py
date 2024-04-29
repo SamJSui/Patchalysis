@@ -9,7 +9,7 @@ def create_app():
         Flask: The created Flask application.
     '''
     app = Flask(__name__)
-    
+
     app.register_blueprint(health_blueprint)
     app.register_blueprint(scrape_blueprint)
 
