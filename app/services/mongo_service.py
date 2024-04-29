@@ -40,7 +40,7 @@ class MongoService:
         try:
             self.uri = os.getenv('MONGO_URI')
             self.client = MongoClient(self.uri)
-            self.db = self.client.get_default_database()
+            self.db = self.client['Patchalysis']
             self.logger.info("MongoDB connection established successfully.")
         except Exception as e:
             self.logger.error(f"Failed to connect to MongoDB: {e}")
