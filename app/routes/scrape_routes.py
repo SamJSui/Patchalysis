@@ -24,4 +24,5 @@ def scrape_stats():
         JSON: The Reponse object for success or failure.
     '''
 
-    return jsonify(scrape_controller.scrape_stats())
+    response = scrape_controller.scrape_stats()
+    return jsonify(response[0]), response[1]
