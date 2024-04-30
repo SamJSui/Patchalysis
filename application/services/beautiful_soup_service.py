@@ -11,9 +11,6 @@ Contributors:
     Jovi Yoshioka
 '''
 
-# Internal imports
-from application.services.mongo_service import MongoService
-
 # Standard library
 import logging
 import re
@@ -29,33 +26,74 @@ class BeautifulSoupService:
     def __init__(self):
         self.patches_url = 'https://leagueoflegends.fandom.com/wiki/Patch_(League_of_Legends)'
         self.stats_url = 'https://gol.gg/champion/list/season-ALL/split-ALL/tournament-ALL/'
+        self.patch_versions = None
+
+    @property
+    def patches(self):
+        ''' Scrapes the patch versions and their URLs from the League of Legends Fandom website.
+
+        Returns:
+            dict: A dictionary containing patch versions as keys and their URLs as values.
+        '''
+
+        if self.patch_versions is not None:
+            history_page = requests.get(self.patches_url)
+            history_soup = BeautifulSoup(history_page.content, 'html.parser')
+            patches = history_soup.find_all('a', {'title': lambda title: all(char.isdigit() or char == '.' or char == 'V' for char in title) if title else False})
+            patches = {
+                patch['title'].strip().replace('.', '_'): patch['href'] 
+                for patch in patches if patch.text.strip() != ''
+            }
+            self.patch_versions = patches
+            return patches
+        else:
+            return self.patch_versions
 
     def scrape_patches(self):
-        """
-        Scrapes the patches from the League of Legends patch history page and each patch's detail page.
-        """
-        logger.info('Scraping patches')
-        history_page = requests.get(self.patches_url)
-        history_soup = BeautifulSoup(history_page.content, 'html.parser')
-        patches = history_soup.find_all('a', {'title': lambda title: all(char.isdigit() or char == '.' or char == 'V' for char in title) if title else False})
-        
-        all_patch_data = []
-        for patch in patches:
+        ''' Scrapes the patch data from the League of Legends Fandom website.
 
-            patch_url = f'https://leagueoflegends.fandom.com{patch["href"]}'
+        Returns:
+            list: A list of dictionaries containing patch version, release date, and champion updates.
+
+        Example:
+            [
+                {
+                    "_id": "11.1",
+                    "release_date": "2021-01-06",
+                    "champions": [
+                        {
+                            "champion": "Aatrox",
+                            "updates": [
+                                {
+                                    "Bug Fixes": "Fixed a bug where Aatrox's E - Umbral Dash would not properly cast if the cursor was outside of the ability's range."
+                                }
+                            ]
+                        },
+                        ...
+                    ]
+                },
+                ...
+            ]
+        '''
+
+        all_patch_data = [] # List to store all patch data
+        patches = self.patches # Get patch versions and their URLs
+
+        for patch in patches:
+            print(f'Processing patch {patch}...')
+            patch_url = f'https://leagueoflegends.fandom.com{patches[patch]}'
             patch_page = requests.get(patch_url)
             patch_soup = BeautifulSoup(patch_page.content, 'html.parser')
             release_date = patch_soup.find('td', {'data-source': 'Release'}).text.strip()
-            champions_data = self._parse_champion_data(patch_soup)
+            champions_data = self._parse_champion_data(patch, patch_soup)
 
-            patch_version = patch.text.strip()
             patch_data = {
-                '_id': patch_version, 
+                '_id': patch, 
                 'release_date': release_date,
                 'champions': champions_data
             }
             all_patch_data.append(patch_data)
-            logger.info(f'Patch {patch_version} data processed and stored.')
+            logger.info(f'Patch {patch} data processed and stored.')
 
         return all_patch_data
 
@@ -93,9 +131,9 @@ class BeautifulSoupService:
                 patch_versions.append(patch['value'])
 
             # Scrape data for each season and patch version.
-            for patch in patch_versions[:1]:
+            for patch in patch_versions:
                 print('     Scraping Patch {}...'.format(patch))  # Simply to track runtime progress.
-
+                patch = patch.replace('.', '_') # Replace '.' with '_' to avoid issues with MongoDB.
                 patch_data = {'_id': patch[:-1], }
 
                 post_data = {'patch': patch}
@@ -142,17 +180,23 @@ class BeautifulSoupService:
         print('Completed scraping stats...')
         return results
 
-    def _parse_champion_data(self, soup):
+    def _parse_champion_data(self, patch: str, soup):
         ''' Parses the champion updates from a BeautifulSoup object of a single patch page.
         
         Args:
+            patch (str): The patch version.
             soup (BeautifulSoup): The BeautifulSoup object of the patch page.
             
         Returns:
             list: A list of dictionaries with champion names and their updates.
         '''
 
-        champions_section = soup.find('span', id='Champions').parent
+        champions_section = soup.find('span', id='Champions') or soup.find('span', id='Champion')
+        if not champions_section:
+            print(f'No champions section found for patch {patch}.')
+            del self.patches[patch] # Remove patch from list of patches to avoid key errors
+            return []
+        champions_section = champions_section.parent
         champion_names = champions_section.find_all_next('dl')
         champions_data = []
 
@@ -170,7 +214,7 @@ class BeautifulSoupService:
                     if 'skin-icon' in str(update) or 'cosmetics' in str(update).lower():
                         continue  # Ignore cosmetic updates
 
-                    category = update.get_text().split('\n')[0].strip()
+                    category = update.get_text().split('\n')[0].strip().replace('.', '')
                     update_text = " ".join(update.text.split('\n')[1:]).strip()
                     updates_list.append({category: update_text})
 
@@ -178,3 +222,4 @@ class BeautifulSoupService:
                 champions_data.append({"champion": champion_name, "updates": updates_list})
 
         return champions_data
+    

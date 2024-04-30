@@ -7,5 +7,6 @@ Classes:
     ScrapeController: A controller class for scraping data.
 '''
 
+# Internal imports
 from .health_controller import HealthController
 from .scrape_controller import ScrapeController

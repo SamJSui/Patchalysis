@@ -7,8 +7,10 @@ Example usage:
     GET /api/health
 '''
 
+# Internal imports
 from application.controllers import HealthController
 
+# Third-party libraries
 from flask import Blueprint, jsonify
 
 health_blueprint = Blueprint('health', __name__, url_prefix='/api')
