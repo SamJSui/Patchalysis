@@ -11,8 +11,8 @@ Contributors:
 '''
 
 # Internal imports
-from app.services import BeautifulSoupService
-from app.services import MongoService
+from application.services import BeautifulSoupService
+from application.services import MongoService
 
 # Third-party libraries
 from flask import request

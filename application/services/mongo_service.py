@@ -22,12 +22,12 @@ import os
 import logging
 
 # Third-party libraries
-from pymongo import MongoClient
+from pymongo.mongo_client import MongoClient
+from pymongo import errors
 
 class MongoService:
     def __init__(self):
-        '''
-        Initializes a new instance of the `MongoService` class.
+        ''' Initializes a new instance of the `MongoService` class.
 
         It establishes a connection to the MongoDB database using the provided environment variable `MONGO_URI`.
         If the connection is successful, it sets the `client` and `db` attributes.
@@ -38,12 +38,18 @@ class MongoService:
         self.logger = logging.getLogger(__name__)
         
         try:
-            self.uri = os.getenv('MONGO_URI')
-            self.client = MongoClient(self.uri)
-            self.db = self.client.get_default_database()
+            self.uri = 'mongodb+srv://ssui:***REMOVED***@***REMOVED***/?retryWrites=true&w=majority&appName=Patchalysis'
+            print(f'uri: {self.uri}')
+            self.client = MongoClient(
+                self.uri,
+                ssl=True,
+                ssl_cert_reqs=False  # This disables certificate verification
+            )
+            self.db = self.client['Patchalysis']
             self.logger.info("MongoDB connection established successfully.")
         except Exception as e:
             self.logger.error(f"Failed to connect to MongoDB: {e}")
+            raise Exception("Failed to connect to MongoDB")
 
     def insert_one(self, collection_name, document):
         '''
@@ -66,6 +72,7 @@ class MongoService:
             return result.inserted_id
         except Exception as e:
             self.logger.error(f"Failed to insert document: {e}")
+            return None
 
     def insert_many(self, collection_name, documents):
         '''
@@ -86,6 +93,10 @@ class MongoService:
             result = collection.insert_many(documents)
             self.logger.info(f"Documents inserted successfully: {result.inserted_ids}")
             return result.inserted_ids
+        except errors.BulkWriteError as bwe:
+            print("Error inserting documents:")
+            for error in bwe.details['writeErrors']:
+                print(f"Index: {error['index']} - {error['errmsg']}")
         except Exception as e:
             self.logger.error(f"Failed to insert documents: {e}")
             return None
