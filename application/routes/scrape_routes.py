@@ -12,7 +12,7 @@ Contributors:
 '''
 
 # Internal imports
-from app.controllers import ScrapeController
+from application.controllers import ScrapeController
 
 # Third-party libraries
 from flask import Blueprint, jsonify
