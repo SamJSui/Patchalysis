@@ -26,6 +26,19 @@ from pymongo.mongo_client import MongoClient
 from pymongo import errors
 
 class MongoService:
+
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super(MongoService, cls).__new__(cls)
+
+            # MongoDB Connection Singleton
+            cls._instance.uri = os.getenv('MONGO_URI')
+            cls._instance.client = MongoClient(cls._instance.uri)
+            cls._instance.db = cls._instance.client['Patchalaysis']
+        return cls._instance
+
     def __init__(self):
         ''' Initializes a new instance of the `MongoService` class.
 
@@ -37,19 +50,6 @@ class MongoService:
         '''
 
         self.logger = logging.getLogger(__name__)
-        
-        try:
-            self.uri = os.getenv('MONGO_URI')
-            self.client = MongoClient(
-                self.uri,
-                ssl=True,
-                ssl_cert_reqs=False  # This disables certificate verification
-            )
-            self.db = self.client['Patchalysis']
-            self.logger.info("MongoDB connection established successfully.")
-        except Exception as e:
-            self.logger.error(f"Failed to connect to MongoDB: {e}")
-            raise Exception("Failed to connect to MongoDB")
 
     def fetch_patch_notes(self, patch_version: str):
         ''' Retrieves a patch notes document from the MongoDB collection.

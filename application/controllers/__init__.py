@@ -8,5 +8,6 @@ Classes:
 '''
 
 # Internal imports
+from .game_controller import GameController
 from .health_controller import HealthController
 from .scrape_controller import ScrapeController
