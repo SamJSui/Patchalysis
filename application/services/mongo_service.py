@@ -35,7 +35,7 @@ class MongoService:
         Raises:
             Exception: If failed to connect to MongoDB.
         '''
-        
+
         self.logger = logging.getLogger(__name__)
         
         try:
@@ -50,6 +50,84 @@ class MongoService:
         except Exception as e:
             self.logger.error(f"Failed to connect to MongoDB: {e}")
             raise Exception("Failed to connect to MongoDB")
+
+    def fetch_patch_notes(self, patch_version: str):
+        ''' Retrieves a patch notes document from the MongoDB collection.
+
+        Args:
+            patch_version (str): The patch version to retrieve.
+
+        Returns:
+            dict: The retrieved document.
+        '''
+
+        try:
+            collection = self.db['patches']
+            result = collection.find_one(patch_version)
+            self.logger.info(f"Document retrieved successfully: {result}")
+            return result
+        except Exception as e:
+            self.logger.error(f"Failed to retrieve document: {e}")
+            return None
+        
+    def fetch_patch_notes_champion(self, patch_version: str, champion_name: str):
+        ''' Retrieves a patch notes document for a specific champion from the MongoDB collection.
+
+        Args:
+            patch_version (str): The patch version to retrieve.
+            champion_name (str): The champion name to retrieve.
+
+        Returns:
+            dict: The retrieved document.
+        '''
+
+        try:
+            collection = self.db['patches']
+            result = collection.find_one({ 'version': patch_version, 'champion': champion_name })
+            self.logger.info(f"Document retrieved successfully: {result}")
+            return result
+        except Exception as e:
+            self.logger.error(f"Failed to retrieve document: {e}")
+            return None
+
+    def fetch_patch_stats(self, patch_version: str):
+        ''' Retrieves a patch stats document from the MongoDB collection.
+
+        Args:
+            patch_version (str): The patch version to retrieve.
+
+        Returns:
+            dict: The retrieved document.
+        '''
+
+        try:
+            collection = self.db['stats']
+            result = collection.find_one(patch_version)
+            self.logger.info(f"Document retrieved successfully: {result}")
+            return result
+        except Exception as e:
+            self.logger.error(f"Failed to retrieve document: {e}")
+            return None
+
+    def fetch_patch_stats_champion(self, patch_version: str, champion_name: str):
+        ''' Retrieves a patch stats document for a specific champion from the MongoDB collection.
+
+        Args:
+            patch_version (str): The patch version to retrieve.
+            champion_name (str): The champion name to retrieve.
+
+        Returns:
+            dict: The retrieved document.
+        '''
+
+        try:
+            collection = self.db['stats']
+            result = collection.find_one({ 'version': patch_version, 'champion': champion_name })
+            self.logger.info(f"Document retrieved successfully: {result}")
+            return result
+        except Exception as e:
+            self.logger.error(f"Failed to retrieve document: {e}")
+            return None
 
     def insert_one(self, collection_name, document):
         ''' Inserts a single document into the specified MongoDB collection.
