@@ -1,6 +1,7 @@
 # Project
 *.pem
 stats.*
+passwords.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
