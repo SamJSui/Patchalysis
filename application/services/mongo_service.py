@@ -20,6 +20,7 @@ Contributors:
 # Standard libraries
 import os
 import logging
+import ssl
 
 # Third-party libraries
 from pymongo.mongo_client import MongoClient
@@ -38,7 +39,7 @@ class MongoService:
             cls._instance.client = MongoClient(
                 cls._instance.uri,
                 ssl=True,
-                ssl_cert_reqs=False # Resolves TLS error
+                ssl_cert_reqs=ssl.CERT_NONE # Resolves TLS error
             )
             cls._instance.db = cls._instance.client['Patchalaysis']
         return cls._instance
