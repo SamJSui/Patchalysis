@@ -20,10 +20,8 @@ Contributors:
 # Standard libraries
 import os
 import logging
-import ssl
 
 # Third-party libraries
-import certifi
 from pymongo.mongo_client import MongoClient
 from pymongo import errors
 
@@ -36,7 +34,7 @@ class MongoService:
             cls._instance = super(MongoService, cls).__new__(cls)
 
             # MongoDB Connection Singleton
-            cls._instance.uri = "mongodb+srv://ssui:***REMOVED***@***REMOVED***/?retryWrites=true&w=majority&appName=Patchalysis"
+            cls._instance.uri = os.getenv('MONGO_URI')
             cls._instance.client = MongoClient(cls._instance.uri)
             cls._instance.db = cls._instance.client['Patchalysis']
         return cls._instance
