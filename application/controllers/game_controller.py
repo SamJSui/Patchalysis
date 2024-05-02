@@ -79,7 +79,7 @@ class GameController:
             patch_version = 'V' + patch_version
         
         try:
-            patch_stats = self.mongo_service.fetch_patch_notes(patch_version)
+            patch_stats = self.mongo_service.fetch_patch_stats(patch_version)
             return patch_stats, 200
         except Exception as e:
             return { 'error': f'Failed to retrieve patch notes: {e}' }, 500
