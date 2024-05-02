@@ -23,6 +23,7 @@ import logging
 import ssl
 
 # Third-party libraries
+import certifi
 from pymongo.mongo_client import MongoClient
 from pymongo import errors
 
@@ -38,8 +39,7 @@ class MongoService:
             cls._instance.uri = os.getenv('MONGO_URI')
             cls._instance.client = MongoClient(
                 cls._instance.uri,
-                ssl=True,
-                ssl_cert_reqs=ssl.CERT_NONE # Resolves TLS error
+                tlsCAfile=certifi.where()
             )
             cls._instance.db = cls._instance.client['Patchalaysis']
         return cls._instance
