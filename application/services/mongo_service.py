@@ -37,10 +37,7 @@ class MongoService:
 
             # MongoDB Connection Singleton
             cls._instance.uri = os.getenv('MONGO_URI')
-            cls._instance.client = MongoClient(
-                cls._instance.uri,
-                tlsCAfile=certifi.where()
-            )
+            cls._instance.client = MongoClient(cls._instance.uri)
             cls._instance.db = cls._instance.client['Patchalaysis']
         return cls._instance
 
