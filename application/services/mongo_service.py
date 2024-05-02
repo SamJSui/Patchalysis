@@ -63,10 +63,7 @@ class MongoService:
 
         try:
             collection = self.db['patches']
-            print(collection)
             result = collection.find_one(patch_version)
-            print(patch_version)
-            print(result)
             self.logger.info(f"Document retrieved successfully: {result}")
             return result
         except Exception as e:

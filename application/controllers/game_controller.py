@@ -71,12 +71,11 @@ class GameController:
             dict: The retrieved document.
         '''
 
+        # Clean up the patch version string
         if '.' in patch_version:
             patch_version = patch_version.replace('.', '_')
-        if 'v' in patch_version:
-            patch_version = patch_version.replace('v', 'V')
-        else:
-            patch_version = 'V' + patch_version
+        if 'v' in patch_version or 'V' in patch_version:
+            patch_version = patch_version[1:]
         
         try:
             patch_stats = self.mongo_service.fetch_patch_stats(patch_version)
@@ -95,12 +94,11 @@ class GameController:
             dict: The retrieved document.
         '''
 
+        # Clean up the patch version string
         if '.' in patch_version:
             patch_version = patch_version.replace('.', '_')
-        if 'v' in patch_version:
-            patch_version = patch_version.replace('v', 'V')
-        else:
-            patch_version = 'V' + patch_version
+        if 'v' in patch_version or 'V' in patch_version:
+            patch_version = patch_version[1:]
         
         try:
             patch_stats = self.mongo_service.fetch_patch_stats_champion(patch_version, champion_name)
