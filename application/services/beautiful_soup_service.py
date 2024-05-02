@@ -128,10 +128,19 @@ class BeautifulSoupService:
             patch_versions = []
             patches = soup.find('select', id='patch').find_all('option', value=lambda x: x != 'ALL')
             for patch in patches:
+                # Avoid duplicate patches within same season.
+                if patch['value'] in patch_versions:
+                    print('     Skipping Patch {} (Dup Key)...'.format(patch['value'][:-1]))
+                    continue
                 patch_versions.append(patch['value'])
 
             # Scrape data for each season and patch version.
             for patch in patch_versions:
+                # Season 8 includes Patch 9.13 on gol.gg. This results in a dup key error on Mongo.
+                if patch[:-1] == "9.13" and "season-S8" in season_link:
+                    print('     Skipping Patch {} (Dup Key)...'.format(patch))
+                    continue
+
                 print('     Scraping Patch {}...'.format(patch))  # Simply to track runtime progress.
                 patch = patch.replace('.', '_') # Replace '.' with '_' to avoid issues with MongoDB.
                 patch_data = {'_id': patch[:-1], }
