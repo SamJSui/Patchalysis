@@ -26,8 +26,8 @@ def scrape_patches():
 
     Returns:
         JSON: The Reponse object for success or failure.
-
     '''
+    
     response, status_code = scrape_controller.scrape_patches_and_insert()
     return jsonify(response), status_code
 
