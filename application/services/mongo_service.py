@@ -36,9 +36,9 @@ class MongoService:
             cls._instance = super(MongoService, cls).__new__(cls)
 
             # MongoDB Connection Singleton
-            cls._instance.uri = os.getenv('MONGO_URI')
+            cls._instance.uri = "mongodb+srv://ssui:***REMOVED***@***REMOVED***/?retryWrites=true&w=majority&appName=Patchalysis"
             cls._instance.client = MongoClient(cls._instance.uri)
-            cls._instance.db = cls._instance.client['Patchalaysis']
+            cls._instance.db = cls._instance.client['Patchalysis']
         return cls._instance
 
     def __init__(self):
@@ -65,7 +65,10 @@ class MongoService:
 
         try:
             collection = self.db['patches']
+            print(collection)
             result = collection.find_one(patch_version)
+            print(patch_version)
+            print(result)
             self.logger.info(f"Document retrieved successfully: {result}")
             return result
         except Exception as e:
