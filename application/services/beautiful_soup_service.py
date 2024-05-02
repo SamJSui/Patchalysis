@@ -115,7 +115,12 @@ class BeautifulSoupService:
         # Double counting last season, so remove last item.
         season_links = season_links[:-1]
 
+        # Reverse list so most recent patches are first.
+        #   Note: This is to get rid of duplicate patches across seasons (e.g., Season 8 having 9.13).
+        season_links.reverse()
+
         # For each season, scrape each patch version's stats.
+        patches_scraped = []
         results = []
         for season_link in season_links:
             print('Scraping {}...'.format(season_link))  # Simply to track runtime progress.
@@ -136,13 +141,14 @@ class BeautifulSoupService:
 
             # Scrape data for each season and patch version.
             for patch in patch_versions:
-                # Season 8 includes Patch 9.13 on gol.gg. This results in a dup key error on Mongo.
-                if patch[:-1] == "9.13" and "season-S8" in season_link:
-                    print('     Skipping Patch {} (Dup Key)...'.format(patch))
+                patch = patch.replace('.', '_')  # Replace '.' with '_' to avoid issues with MongoDB.
+
+                # Avoid duplicate patches across seasons (e.g., Season 8 having 9.13).
+                if patch in patches_scraped:
+                    print('     Skipping Patch {} (Dup Key)...'.format(patch[:-1]))
                     continue
 
                 print('     Scraping Patch {}...'.format(patch))  # Simply to track runtime progress.
-                patch = patch.replace('.', '_') # Replace '.' with '_' to avoid issues with MongoDB.
                 patch_data = {'_id': patch[:-1], }
 
                 post_data = {'patch': patch}
@@ -182,6 +188,7 @@ class BeautifulSoupService:
 
                 patch_data['champions'] = data
                 results.append(patch_data)
+                patches_scraped.append(patch)
 
         f = open("stats.txt", "a")
         f.write(str(results))
