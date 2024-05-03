@@ -10,6 +10,17 @@ from flask import Blueprint, jsonify
 game_blueprint = Blueprint('game', __name__, url_prefix='/api')
 game_controller = GameController()
 
+@game_blueprint.route('/patches', methods=['GET'])
+def get_patches():
+    ''' Retrieves a list of all patches from the MongoDB collection.
+
+    Returns:
+        JSON: The list of patches.
+    '''
+
+    response, status_code = game_controller.get_patches()
+    return jsonify(response), status_code
+
 @game_blueprint.route('/patch/notes/<patch_version>', methods=['GET'])
 def get_patch_notes(patch_version):
     ''' Retrieves a patch notes document from the MongoDB collection.

@@ -1,6 +1,7 @@
 
 
 #Internal imports
+from application.services.beautiful_soup_service import BeautifulSoupService
 from application.services.mongo_service import MongoService
 
 # Standard libraries
@@ -8,11 +9,30 @@ from application.services.mongo_service import MongoService
 # Third-party libraries
 
 class GameController:
+    ''' The GameController class is responsible for handling requests related to the game data.
 
+    Attributes:
+        beautiful_soup (BeautifulSoup): The BeautifulSoup instance used to parse HTML.
+        mongo_service (MongoService): The MongoService instance used to interact with the MongoDB database.
 
+    '''
 
     def __init__(self):
+        self.beautiful_soup = BeautifulSoupService()
         self.mongo_service = MongoService()
+
+    def get_patches(self):
+        ''' Retrieves a list of all patches from the MongoDB collection.
+
+        Returns:
+            list: The list of patches.
+        '''
+        
+        try:
+            patches = self.beautiful_soup.patches
+            return { 'patches': patches }, 200
+        except Exception as e:
+            return { 'error': f'Failed to retrieve patches: {e}' }, 500
 
     def get_patch_notes(self, patch_version: str):
         ''' Retrieves a patch notes document from the MongoDB collection.
