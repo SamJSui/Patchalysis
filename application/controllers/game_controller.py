@@ -47,10 +47,9 @@ class GameController:
         # Clean up the patch version string
         if '.' in patch_version:
             patch_version = patch_version.replace('.', '_')
+
         if 'v' in patch_version:
             patch_version = patch_version.replace('v', 'V')
-        else:
-            patch_version = 'V' + patch_version
         
         try:
             patch_notes = self.mongo_service.fetch_patch_notes(patch_version)
@@ -72,8 +71,6 @@ class GameController:
             patch_version = patch_version.replace('.', '_')
         if 'v' in patch_version:
             patch_version = patch_version.replace('v', 'V')
-        else:
-            patch_version = 'V' + patch_version
         
         try:
             patch_notes = self.mongo_service.fetch_patch_notes_champion(patch_version, champion_name)
