@@ -36,7 +36,7 @@ class BeautifulSoupService:
             dict: A dictionary containing patch versions as keys and their URLs as values.
         '''
 
-        if self.patch_versions is not None:
+        if self.patch_versions is None:
             history_page = requests.get(self.patches_url)
             history_soup = BeautifulSoup(history_page.content, 'html.parser')
             patches = history_soup.find_all('a', {'title': lambda title: all(char.isdigit() or char == '.' or char == 'V' for char in title) if title else False})
