@@ -16,7 +16,7 @@
     <img src="assets/patchalysis.png" alt="Patchalysis Logo" width="120" height="120">
   </a>
 
-<h3 align="center">Patchalysis</h3>
+<h3 align="center">Patchalysis <a href="https://patchalysis.com">(https://patchalysis.com)</a></h3>
 
   <p align="left">
     Patchalysis is a data engineering project focused on harnessing historical League of Legends patch notes to predict the landscape of the game. By analyzing trends between updates and champion performance, this tool aids players and developers in understanding the evolving dynamics of the game.
@@ -93,7 +93,7 @@
 
 ### Prerequisites
 
-This project requires Python and several data analysis libraries.
+This project requires Python and several data analysis libraries, listed in `requirements.txt`.
 
 ### Installation
 
@@ -102,7 +102,7 @@ This project requires Python and several data analysis libraries.
    git clone https://github.com/your-username/Patchalysis.git
    cd Patchalysis/
    ```
-2. Install Python packages
+2. Install Python packages. To view the required dependencies, please reference `requirements.txt`.
    ```sh
    pip install -r requirements.txt
    ```
@@ -110,6 +110,25 @@ This project requires Python and several data analysis libraries.
    ```sh
    python3 wsgi.py
    ```
+4. Open your browser and navigate to the output address.
+   ```sh
+   http://127.0.0.1:80 (Example)
+   ```
+
+### Use
+
+* To use the web components, run the Flask server and navigate to the app in your browser, as described in the Installation section.
+
+* To use the data processing notebooks (located in the `notebooks` directory), ensure you have installed the appropriate dependencies, included in the `requirements.txt` file. Then, open Jupyter Notebook, navigate to your desired .ipynb file, and run through it.
+
+### Files
+
+* The web scraping code can be found in `application/services/beautiful_soup_service.py`.
+* The MongoDB code (i.e., databasing) can be found in `application/services/mongo_service.py`.
+* The web interface's HTML code can be found in the `application/templates` directory.
+* The web interface's CSS/JS code and assets can be found in the `application/static` directory.
+* The data processing Jupyter Notebooks can be found in the `notebooks` directory.
+* The `scripts` directory includes scripts used to generate some of the project's poster diagrams.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -129,7 +148,7 @@ This project requires Python and several data analysis libraries.
 <!-- CONTACT -->
 ## Contributors
 
-Sam Sui - [@samjsui](https://github.com/samjsui)
+Sam Sui - [@samjsui](https://github.com/samjsui)<br />
 Jovi Yoshioka - [@jovanyoshioka](https://github.com/jovanyoshioka)
 
 Project Link: [https://github.com/SamJSui/Patchalysis](https://github.com/SamJSui/Patchalysis)
@@ -141,7 +160,11 @@ Project Link: [https://github.com/SamJSui/Patchalysis](https://github.com/SamJSu
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* Icons and images credited to:
+This project was a part of the COSC 426: Introduction to Data Mining & Analytics course taught at the University of Tennessee Knoxville. The course is taught by Dr. Michela Taufer, accompanied by teaching assistants Ian Lumsden, Nigel Tan, Paula Olaya, Jack Marquez, and Syed Meerza.
+
+Icons provided by Font Awesome, License: https://fontawesome.com/license
+
+Icons and images credited to:
   - [Scraper icons created by Freepik - Flaticon](https://www.flaticon.com/free-icons/scraper)
   - [Publish icons created by Prashanth Rapolu 15 - Flaticon](https://www.flaticon.com/free-icons/publish)
   - [Magnifying glass icons created by Payungkead - Flaticon](https://www.flaticon.com/free-icons/magnifying-glass)
