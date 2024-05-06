@@ -125,6 +125,7 @@ This project requires Python and several data analysis libraries, listed in `req
 
 ### Files
 
+* The project poster is named `Poster-Sui-Yoshioka.pdf`.
 * The web scraping code can be found in `application/services/beautiful_soup_service.py`.
 * The MongoDB code (i.e., databasing) can be found in `application/services/mongo_service.py`.
 * The web interface's HTML code can be found in the `application/templates` directory.
