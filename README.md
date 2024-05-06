@@ -27,7 +27,7 @@
 
 <div align="center">
   <a href="https://patchalysis.com">
-        <img src='assets/masthead.png' alt='Patchalysis Masthead' width='70%'/>
+        <img src='assets/masthead.png' alt='Patchalysis Masthead' width='80%'/>
   </a>
 </div>
 
@@ -57,15 +57,24 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-* **In-depth Analysis**: Utilizes a sophisticated data pipeline to process and analyze patch notes.
-* **Topic Modeling**: Leverages natural language processing to model keywords and topics in the form of unsupervised learning.
 * **Interactive Dashboards**: Features a user-friendly interface with dashboards showcasing analytical insights.
+* **In-depth Analysis**: Utilizes a sophisticated data pipeline to process and analyze patch notes.
+* **Advanced Topic Modeling**: Leverages natural language processing to model keywords and topics in the form of unsupervised learning.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <div align="center">
   <a href="https://patchalysis.com">
-        <img src='assets/homepage.png' alt='Patchalysis Masthead' width='70%'/>
+        <img src='assets/homepage.png' alt='Patchalysis Masthead' width='80%'/>
+  </a>
+</div>
+
+* **Seamless data pipeline and deployment**: Efficiently scrapes, processes, and stores data with a continuous workflow, deployed onto AWS Elastic Beanstalk.
+* **Integrated API Endpoints**: Hosts RESTful API Endpoints for database access (MongoDB) and retrieval of text and statistical data for each patch.
+
+<div align="center">
+  <a href="https://patchalysis.com">
+        <img src='assets/api.png' alt='Patchalysis Masthead' width='80%'/>
   </a>
 </div>
 
@@ -75,6 +84,7 @@
 * [![Pandas][Pandas-badge]][Pandas-url]
 * [![Flask][Flask-badge]][Flask-url]
 * [![BeautifulSoup][BeautifulSoup-badge]][BeautifulSoup-url]
+* [![MongoDB][MongoDB-badge]][MongoDB-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -149,3 +159,5 @@ Project Link: [https://github.com/SamJSui/Patchalysis](https://github.com/SamJSu
 [Flask-url]: https://flask.palletsprojects.com/
 [BeautifulSoup-badge]: https://img.shields.io/badge/BeautifulSoup-3776AB?style=for-the-badge&logo=python&logoColor=white
 [BeautifulSoup-url]: https://www.crummy.com/software/BeautifulSoup/
+[MongoDB-badge]: https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white
+[MongoDB-url]: https://www.mongodb.com/
