@@ -93,16 +93,18 @@ This project requires Python and several data analysis libraries.
    cd Patchalysis/
 2. Install Python packages
    pip install -r requirements.txt
+3. Run the Flask server
+   `python3 wsgi.py`
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Scraping and Processing Pipeline
-- [ ] Analytical Model Development
-- [ ] Dashboard Implementation
-- [ ] Release Beta Version
+- [x] Scraping and Processing Pipeline
+- [x] Analytical Model Development
+- [x] Dashboard Implementation
+- [x] Release Beta Version
 - [ ] Collect User Feedback
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
