@@ -1,0 +1,51 @@
+/**
+ * Fonts
+ */
+@font-face {
+    font-family: Lora;
+    src: url('../assets/Lora.ttf');
+}
+
+/**
+ * Variables
+ */
+:root {
+    --font-primary: Lora;
+}
+
+/**
+ * Global Styling
+ */
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 100vh;
+}
+
+h1, h2, p, ul, a {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-primary);
+}
+
+label, select {
+    font-family: var(--font-primary);
+}
+
+button.primary {
+    /* Specify font-size, margin, and padding for specific use case. */
+    border: none;
+    border-radius: 3px;
+    color: #FFFFFF;
+    font-family: var(--font-primary);
+    background-color: #1C1F33;
+    transition: background-color 0.25s;
+}
+button.primary:hover {
+    cursor: pointer;
+    background-color: #32385c;
+}
+button.primary:focus { outline: none; }

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Patchalysis</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="X">
+    <meta name="keywords" content="X">
+    <meta name="author" content="X">
+    <!-- <meta name="image" property="og:image" content="**thumbnail path**" /> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/fontawesome-6.5.2/css/all.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/global.css') }}">
+    <!-- <link rel="icon" href="assets/favicon.png" type="image/png" sizes="64x64"> -->
+    <!-- <link rel="preload" href="assets/tiltneon.ttf" as="font" type="font/ttf" crossorigin="anonymous" /> -->
+  </head>
+  <body>
+    <div class="container">
+      <img src="{{ url_for('static', filename='assets/patchalysis.png') }}" />
+      <h1>A Patch Notes Analysis Tool</h1>
+      <a href="/tsa"><button class="primary">Get Started</button></a>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}" type="text/javascript"></script>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+header {
+    margin: 10px 20px;
+}
+header h1 {
+    font-weight: 600;
+}
+header p {
+    font-style: italic;
+}
+
+div.champions-container {
+    width: 300px;
+    margin-top: 30px;
+    padding: 10px 20px;
+    float: left;
+    position: relative;
+}
+div.champions-container h1 {
+    font-weight: 200;
+}
+div.champions-container p {
+    font-size: 1em;
+    font-style: italic;
+}
+div.champions-container select {
+    width: 100%;
+    height: 250px;
+    font-size: 1em;
+    margin: 10px 0;
+}
+div.champions-container button {
+    font-size: 1.25em;
+    padding: 7.5px 15px;
+}
+
+div.plot {
+    overflow: hidden;  /* Makes plot take remaining width of page after champions container. */
+}
