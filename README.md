@@ -95,7 +95,7 @@
 
 ### Prerequisites
 
-This project requires Python and several data analysis libraries, listed in `requirements.txt`.
+This project requires Python and several data analysis libraries, listed in `requirements.txt`. This project also relies on Dataverse being operational, as data is downloaded from this platform, as seen in `notebooks/02-note_sentences.ipynb`.
 
 ### Installation
 
