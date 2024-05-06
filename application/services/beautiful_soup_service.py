@@ -225,7 +225,7 @@ class BeautifulSoupService:
             match = re.match(r"^([^\(-]+)", champion_name)
             if match:
                 champion_name = match.group(1).strip()
-            logger.debug(f"Processing updates for {champion_name}")
+            print(f"Processing updates for {champion_name}")
             updates_list = []
             updates = champion.find_next('ul')
             if updates:
