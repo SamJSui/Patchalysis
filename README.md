@@ -46,6 +46,8 @@
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
+        <li><a href="#use">Use</a></li>
+        <li><a href="#files">Files</a></li>
       </ul>
     </li>
     <li><a href="#roadmap">Roadmap</a></li>
