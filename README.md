@@ -91,10 +91,15 @@ This project requires Python and several data analysis libraries.
    ```sh
    git clone https://github.com/your-username/Patchalysis.git
    cd Patchalysis/
+   ```
 2. Install Python packages
+   ```sh
    pip install -r requirements.txt
+   ```
 3. Run the Flask server
-   `python3 wsgi.py`
+   ```sh
+   python3 wsgi.py
+   ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
